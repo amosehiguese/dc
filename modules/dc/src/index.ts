@@ -1,7 +1,7 @@
 import app from "./app";
 import { APP_PORT } from "./utils/secrets";
 import logger from "./utils/logger";
-import { initDB } from "./database";
+import initDB from "./database";
 
 const http = require('http');
 const httpServer = http.createServer(app);
@@ -14,3 +14,4 @@ initDB()
       .on("server", (e: Error)=> logger.error(e));
     }
   )
+

@@ -4,20 +4,19 @@ import { DB } from "../utils/secrets";
 
 const dbURI = `postgres://${DB.USER}:${DB.PASSWORD}@${DB.HOST}:${DB.PORT}/${DB.NAME}`
 
-const sequelizeConnection = new Sequelize(dbURI)
-const initModels = (sequelize: Sequelize) => {
+export const sequelize = new Sequelize(dbURI)
 
-}
-
-// const { _ } = initModels(sequelizeConnection)
-
-export const initDB = async () => {
+const initDB = async () => {
   try {
-    await sequelizeConnection.authenticate();
-    await sequelizeConnection.sync({force: false})
+    await sequelize.authenticate();
+    await sequelize.sync({force: false})
     logger.info("DB successfully connected.")
+
   } catch(error) {
     logger.error("An error occured while initializing database.")
     process.exit(1);
   }
 }
+
+
+export default initDB

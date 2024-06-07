@@ -17,7 +17,7 @@ export const DB = {
   PASSWORD : _.defaultTo(process.env.DB_PWD, "secret"),
   HOST : _.defaultTo(process.env.DB_HOST, "localhost"),
   NAME : _.defaultTo(process.env.DB_NAME, "dcdb"),
-  PORT : _.defaultTo(parseInt(process.env.DB_PORT as string), 27017),
+  PORT : _.defaultTo(parseInt(process.env.DB_PORT as string), 5432),
 }
 
 

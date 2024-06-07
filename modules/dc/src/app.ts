@@ -4,7 +4,8 @@ import { loadErrorHandlers } from "./utils/error";
 import helmet from "helmet";
 import { SESSION_SECRET } from "./utils/secrets";
 import "./database";
-import "./utils/passport";
+import User from "./database/models/user";
+import logger from "./utils/logger";
 
 const express = require("express");
 const session = require("express-session");
@@ -23,7 +24,19 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-// app.use("/api/v1", mainRouter);
+app.get("/", (req, res)=>{
+  res.send("Hello world")
+})
+app.get("/api/v1", async (req, res)=>{
+
+  const user = await User.findOrCreate({
+    where: {email:"amosehiguese@gmail.com"},
+
+  })
+
+  user && logger.info("User created successfully")
+  res.json(user)
+});
 
 loadErrorHandlers(app)
 

@@ -2,6 +2,8 @@
 .env
 .env.local
 
-/logs
+/src/database/config/config.json
 
+/logs
+/lib
 /build
