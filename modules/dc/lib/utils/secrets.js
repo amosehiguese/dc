@@ -15,7 +15,7 @@ exports.JWT_SECRET = _.defaultTo(process.env.JWT_SECRET, "secret");
 exports.SESSION_SECRET = _.defaultTo(process.env.SESSION_SECRET, "secret");
 exports.DB = {
     USER: _.defaultTo(process.env.DB_USER, "dc"),
-    PASSWORD: _.defaultTo(process.env.DB_USER_PWD, "secret"),
+    PASSWORD: _.defaultTo(process.env.DB_PWD, "secret"),
     HOST: _.defaultTo(process.env.DB_HOST, "localhost"),
     NAME: _.defaultTo(process.env.DB_NAME, "dcdb"),
     PORT: _.defaultTo(parseInt(process.env.DB_PORT), 27017),

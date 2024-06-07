@@ -14,7 +14,7 @@ export const JWT_SECRET = _.defaultTo(process.env.JWT_SECRET, "secret");
 export const SESSION_SECRET = _.defaultTo(process.env.SESSION_SECRET, "secret");
 export const DB = {
   USER : _.defaultTo(process.env.DB_USER, "dc"),
-  PASSWORD : _.defaultTo(process.env.DB_USER_PWD, "secret"),
+  PASSWORD : _.defaultTo(process.env.DB_PWD, "secret"),
   HOST : _.defaultTo(process.env.DB_HOST, "localhost"),
   NAME : _.defaultTo(process.env.DB_NAME, "dcdb"),
   PORT : _.defaultTo(parseInt(process.env.DB_PORT as string), 27017),
