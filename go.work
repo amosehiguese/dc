@@ -1,0 +1,12 @@
+go 1.22.2
+
+use (
+	./modules/dc
+	./pkg/core-auth
+	./pkg/core-config
+	./pkg/core-jwt
+	./pkg/core-otel
+	./pkg/core-repo
+	./pkg/core-utils
+	./pkg/core-validator
+)
