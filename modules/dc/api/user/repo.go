@@ -51,7 +51,7 @@ func (u *UserRepo) Create(ctx context.Context, body *store.UserModel) (*store.Us
 
 func (u *UserRepo) Update(ctx context.Context, id uuid.UUID, body *store.UserModel) (*store.UserModel, error) {
 	c := store.GetDBClient()
-	c.Client.Model(&store.UserModel{}).Where("ID=?", id).Updates(body)
+	c.Client.WithContext(ctx).Model(&store.UserModel{}).Where("ID=?", id).Updates(body)
 	return body, nil
 }
 

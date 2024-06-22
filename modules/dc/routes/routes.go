@@ -10,6 +10,6 @@ import (
 
 func MainRoutesV1(api fiber.Router, config coreconfig.Config, log *zap.Logger) {
 	v1 := api.Group("/v1")
-	user.UserRoutes(v1)
+	user.UserRoutes(v1, config, log)
 	auth_route.AuthRoutes(v1, config, log)
 }

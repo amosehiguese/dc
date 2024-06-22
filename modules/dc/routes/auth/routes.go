@@ -17,12 +17,12 @@ func AuthRoutes(v1 fiber.Router, config coreconfig.Config, log *zap.Logger) {
 	// todo: handle error
 	rc, _ := store.RedisConn(config, log)
 
-	authApi := auth_api.NewAuth(user_api.NewUserRepo(), db, rc, log)
+	authHandler := auth_api.NewAuthHandler(user_api.NewUserRepo(), db, rc, log)
 
-	auth.Post("/signup", authApi.Signup)
-	auth.Post("/login", authApi.Login)
-	auth.Delete("/logout", middleware.JWTProtected(), authApi.Logout, authenticate)
-	auth.Post("/verify-email", authApi.VerifyEmail)
-	auth.Post("/reset-password", authApi.ResetPassword)
-	auth.Post("/forgot-password", authApi.ForgotPassword)
+	auth.Post("/signup", authHandler.Signup)
+	auth.Post("/login", authHandler.Login)
+	auth.Delete("/logout", middleware.JWTProtected(), authHandler.Logout, authenticate)
+	auth.Post("/verify-email", authHandler.VerifyEmail)
+	auth.Post("/reset-password", authHandler.ResetPassword)
+	auth.Post("/forgot-password", authHandler.ForgotPassword)
 }

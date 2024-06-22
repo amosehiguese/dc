@@ -25,7 +25,7 @@ import (
 // @Param role body string true "Role"
 // @Success 200 {string} status "ok"
 // @Router /api/v1/auth/signup [post]
-func (a *Auth) Signup(c fiber.Ctx) error {
+func (a *AuthHandler) Signup(c fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -112,7 +112,7 @@ func (a *Auth) Signup(c fiber.Ctx) error {
 // @Param token body string true "Token"
 // @Success 200 {object} models.User
 // @Router /api/v1/auth/verify-email [post]
-func (a *Auth) VerifyEmail(c fiber.Ctx) error {
+func (a *AuthHandler) VerifyEmail(c fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -170,7 +170,7 @@ func (a *Auth) VerifyEmail(c fiber.Ctx) error {
 }
 
 // Login method to auth user and return access and refresh tokens.
-// @Description Auth user and return access and refresh token.
+// @Description AuthHandler user and return access and refresh token.
 // @Summary auth user and return access and refresh token
 // @Tags User
 // @Accept json
@@ -179,7 +179,7 @@ func (a *Auth) VerifyEmail(c fiber.Ctx) error {
 // @Param password body string true "User Password"
 // @Success 200 {string} status "ok"
 // @Router /api/v1/auth/login [post]
-func (a *Auth) Login(c fiber.Ctx) error {
+func (a *AuthHandler) Login(c fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -296,7 +296,7 @@ func (a *Auth) Login(c fiber.Ctx) error {
 // @Success 204 {string} status "ok"
 // @Security ApiKeyAuth
 // @Router /api/v1/auth/logout [post]
-func (a *Auth) Logout(c fiber.Ctx) error {
+func (a *AuthHandler) Logout(c fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -337,7 +337,7 @@ func (a *Auth) Logout(c fiber.Ctx) error {
 // @Param email body string true "Email"
 // @Success 200 {object} models.User
 // @Router /api/v1/auth/forgot-password [post]
-func (a *Auth) ForgotPassword(c fiber.Ctx) error {
+func (a *AuthHandler) ForgotPassword(c fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
@@ -443,7 +443,7 @@ func (a *Auth) ForgotPassword(c fiber.Ctx) error {
 // @Param password body string true "Password"
 // @Success 200 {object} models.User
 // @Router /api/v1/auth/reset-password [post]
-func (a *Auth) ResetPassword(c fiber.Ctx) error {
+func (a *AuthHandler) ResetPassword(c fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 

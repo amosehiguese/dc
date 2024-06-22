@@ -9,25 +9,25 @@ import (
 	"go.uber.org/zap"
 )
 
-type Auth struct {
+type AuthHandler struct {
 	store.DB
 	user_api.User
-	*store.Redis[Auth]
+	*store.Redis[AuthHandler]
 	*zap.Logger
 	*coreconfig.Config
 }
 
-func NewAuth(u user_api.User, db store.DB, rc *redis.Client, log *zap.Logger) *Auth {
-	return &Auth{
+func NewAuthHandler(u user_api.User, db store.DB, rc *redis.Client, log *zap.Logger) *AuthHandler {
+	return &AuthHandler{
 		DB:     db,
-		Redis:  (*store.Redis[Auth])(store.NewRedis[Auth](rc)),
+		Redis:  (*store.Redis[AuthHandler])(store.NewRedis[AuthHandler](rc)),
 		Logger: log,
 		User:   u,
 		Config: coreconfig.GetConfig(),
 	}
 }
 
-func (a *Auth) ApiSendVerificationEmail(name, email, verificationToken, origin string) error {
+func (a *AuthHandler) ApiSendVerificationEmail(name, email, verificationToken, origin string) error {
 	nve := services.NewVerificationEmail(name, email, verificationToken, origin)
 	err := nve.SendVerificationEmail()
 	if err != nil {
@@ -36,7 +36,7 @@ func (a *Auth) ApiSendVerificationEmail(name, email, verificationToken, origin s
 	return nil
 }
 
-func (a *Auth) ApiSendResetPasswordEmail(name, email, token, origin string) error {
+func (a *AuthHandler) ApiSendResetPasswordEmail(name, email, token, origin string) error {
 	rpe := services.NewResetPasswordEmail(name, email, token, origin)
 	err := rpe.SendResetPasswordEmail()
 	if err != nil {

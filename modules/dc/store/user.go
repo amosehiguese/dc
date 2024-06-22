@@ -46,21 +46,3 @@ func (u *UserModel) ComparePasswordHash(inputPwd string) bool {
 	return true
 
 }
-
-// type UserIdem struct {
-// 	*Redis[UserModel]
-// }
-
-// func NewUserRedisIdem(config coreconfig.Config, log *zap.Logger) (*UserIdem, error) {
-// 	conn, err := RedisConn(config, log)
-// 	if err != nil {
-// 		log.With(
-// 			zap.Error(err),
-// 		).Error("Failed to connect to redis db")
-// 		return nil, err
-// 	}
-// 	c := NewRedis[UserIdem](conn)
-// 	return &UserIdem{
-// 		Redis: c,
-// 	}, nil
-// }
