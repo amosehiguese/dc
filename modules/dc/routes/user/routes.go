@@ -10,7 +10,7 @@ import (
 )
 
 func UserRoutes(v1 fiber.Router, config coreconfig.Config, log *zap.Logger) {
-	users := v1.Group("/users")
+	users := v1.Group("/u")
 
 	db := store.GetDBClient()
 	rc, _ := store.RedisConn(config, log)
@@ -21,6 +21,7 @@ func UserRoutes(v1 fiber.Router, config coreconfig.Config, log *zap.Logger) {
 	users.Get("/me", middleware.JWTProtected(), userHandler.CurrentUser)
 	users.Get("/:id", middleware.JWTProtected(), userHandler.SingleUser)
 	users.Post("/", middleware.JWTProtected(), userHandler.CreateUser)
-	users.Put("/:id", middleware.JWTProtected(), userHandler.UpdateUser)
+	users.Patch("/modify", middleware.JWTProtected(), userHandler.UpdateUser)
+	users.Patch("/modify-password", middleware.JWTProtected(), userHandler.ChangePassword)
 
 }

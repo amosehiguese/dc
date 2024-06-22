@@ -31,22 +31,29 @@ func ExtractTokenMetadata(c fiber.Ctx) (*TokenMetadata, error) {
 		exp := int64(claims["exp"].(float64))
 
 		credentials := map[string]bool{
+			// Appointment
 			"appointment:create": claims["appointment:create"].(bool),
 			"appointment:delete": claims["appointment:delete"].(bool),
 			"appointment:read":   claims["appointment:read"].(bool),
 			"appointment:update": claims["appointment:update"].(bool),
-			"doctor:create":      claims["doctor:create"].(bool),
-			"doctor:delete":      claims["doctor:delete"].(bool),
-			"doctor:read":        claims["doctor:read"].(bool),
-			"doctor:update":      claims["doctor:update"].(bool),
-			"slot:create":        claims["slot:create"].(bool),
-			"slot:delete":        claims["slot:delete"].(bool),
-			"slot:read":          claims["slot:read"].(bool),
-			"slot:update":        claims["slot:update"].(bool),
-			"user:create":        claims["user:create"].(bool),
-			"user:delete":        claims["user:delete"].(bool),
-			"user:read":          claims["user:read"].(bool),
-			"user:update":        claims["user:update"].(bool),
+
+			// Doctor
+			"doctor:create": claims["doctor:create"].(bool),
+			"doctor:delete": claims["doctor:delete"].(bool),
+			"doctor:read":   claims["doctor:read"].(bool),
+			"doctor:update": claims["doctor:update"].(bool),
+
+			// Slot
+			"slot:create": claims["slot:create"].(bool),
+			"slot:delete": claims["slot:delete"].(bool),
+			"slot:read":   claims["slot:read"].(bool),
+			"slot:update": claims["slot:update"].(bool),
+
+			// User
+			"user:create": claims["user:create"].(bool),
+			"user:delete": claims["user:delete"].(bool),
+			"user:read":   claims["user:read"].(bool),
+			"user:update": claims["user:update"].(bool),
 		}
 
 		return &TokenMetadata{
