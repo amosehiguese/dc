@@ -45,10 +45,6 @@ func run(log *zap.Logger) error {
 	})
 	// Set up DB
 	db := store.GetDBClient()
-	if err != nil {
-		log.Error("Failed to connect to database", zap.Error(err))
-		return err
-	}
 	// Migrate
 	db.AutoMigrate()
 	log.Info("connection to database established", zap.String("port", config.Database.Port))
