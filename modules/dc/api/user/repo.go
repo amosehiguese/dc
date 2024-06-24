@@ -7,13 +7,13 @@ import (
 	"github.com/google/uuid"
 )
 
-type User interface {
-	Create(ctx context.Context, body *store.UserModel) (*store.UserModel, error)
-	Update(ctx context.Context, id uuid.UUID, body *store.UserModel) (*store.UserModel, error)
+type IUser interface {
+	Create(ctx context.Context, body *store.User) (*store.User, error)
+	Update(ctx context.Context, id uuid.UUID, body *store.User) (*store.User, error)
 	Delete(ctx context.Context, id uuid.UUID) error
-	GetAllUsers(ctx context.Context, filter map[string]any, sortBy []string, limit int, page int) ([]*store.UserModel, error)
-	GetByID(ctx context.Context, id uuid.UUID) (*store.UserModel, error)
-	GetByEmail(ctx context.Context, email string) (*store.UserModel, error)
+	GetAllUsers(ctx context.Context, filter map[string]any, sortBy []string, limit int, page int) ([]*store.User, error)
+	GetByID(ctx context.Context, id uuid.UUID) (*store.User, error)
+	GetByEmail(ctx context.Context, email string) (*store.User, error)
 }
 
 type UserRepo struct {
@@ -21,8 +21,8 @@ type UserRepo struct {
 	allowedFilterByFields []string
 }
 
-func NewUserRepo() User {
-	var user User = &UserRepo{
+func NewUserRepo() IUser {
+	var user IUser = &UserRepo{
 		allowedSortByFields: []string{
 			"Name",
 			"CreatedAt",
@@ -38,9 +38,9 @@ func NewUserRepo() User {
 }
 
 // Ensures that UserRepo implements User
-var _ User = (*UserRepo)(nil)
+var _ IUser = (*UserRepo)(nil)
 
-func (u *UserRepo) Create(ctx context.Context, body *store.UserModel) (*store.UserModel, error) {
+func (u *UserRepo) Create(ctx context.Context, body *store.User) (*store.User, error) {
 	c := store.GetDBClient()
 	result := c.Client.WithContext(ctx).Create(&body)
 	if result.Error != nil {
@@ -49,33 +49,33 @@ func (u *UserRepo) Create(ctx context.Context, body *store.UserModel) (*store.Us
 	return body, nil
 }
 
-func (u *UserRepo) Update(ctx context.Context, id uuid.UUID, body *store.UserModel) (*store.UserModel, error) {
+func (u *UserRepo) Update(ctx context.Context, id uuid.UUID, body *store.User) (*store.User, error) {
 	c := store.GetDBClient()
-	c.Client.WithContext(ctx).Model(&store.UserModel{}).Where("ID=?", id).Updates(body)
+	c.Client.WithContext(ctx).Model(&store.User{}).Where("ID=?", id).Updates(body)
 	return body, nil
 }
 
 func (u *UserRepo) Delete(ctx context.Context, id uuid.UUID) error {
 	c := store.GetDBClient()
-	c.Client.Delete(&store.UserModel{}, id)
+	c.Client.Delete(&store.User{}, id)
 	return nil
 }
 
-func (u *UserRepo) GetAllUsers(ctx context.Context, filter map[string]any, sortBy []string, limit int, page int) ([]*store.UserModel, error) {
-	return []*store.UserModel{}, nil
+func (u *UserRepo) GetAllUsers(ctx context.Context, filter map[string]any, sortBy []string, limit int, page int) ([]*store.User, error) {
+	return []*store.User{}, nil
 }
 
-func (u *UserRepo) GetByID(ctx context.Context, id uuid.UUID) (*store.UserModel, error) {
+func (u *UserRepo) GetByID(ctx context.Context, id uuid.UUID) (*store.User, error) {
 	return u.by(ctx, "id", id)
 }
 
-func (u *UserRepo) GetByEmail(ctx context.Context, email string) (*store.UserModel, error) {
+func (u *UserRepo) GetByEmail(ctx context.Context, email string) (*store.User, error) {
 	return u.by(ctx, "email", email)
 }
 
-func (u *UserRepo) by(ctx context.Context, key string, value any) (*store.UserModel, error) {
+func (u *UserRepo) by(ctx context.Context, key string, value any) (*store.User, error) {
 	c := store.GetDBClient()
-	var user store.UserModel
+	var user store.User
 	if row := c.Client.WithContext(ctx).Where(key+"=?", value).First(&user); row.Error != nil {
 		return nil, row.Error
 	}

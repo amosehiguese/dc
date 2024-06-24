@@ -11,18 +11,18 @@ import (
 
 type AuthHandler struct {
 	store.DB
-	user_api.User
+	user_api.IUser
 	*store.Redis[AuthHandler]
 	*zap.Logger
 	*coreconfig.Config
 }
 
-func NewAuthHandler(u user_api.User, db store.DB, rc *redis.Client, log *zap.Logger) *AuthHandler {
+func NewAuthHandler(u user_api.IUser, db store.DB, rc *redis.Client, log *zap.Logger) *AuthHandler {
 	return &AuthHandler{
 		DB:     db,
 		Redis:  (*store.Redis[AuthHandler])(store.NewRedis[AuthHandler](rc)),
 		Logger: log,
-		User:   u,
+		IUser:  u,
 		Config: coreconfig.GetConfig(),
 	}
 }

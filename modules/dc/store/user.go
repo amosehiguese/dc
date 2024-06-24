@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserModel struct {
+type User struct {
 	corerepo.BaseModel
 	FirstName                   string        `gorm:"size:255;not null" json:"firstname" validate:"required"`
 	LastName                    *string       `gorm:"size:255" json:"lastname,omitempty" validate:"lte=255"`
@@ -23,20 +23,24 @@ type UserModel struct {
 	VerificationToken           string        `gorm:"size:255" json:"-" validate:"required,lte=255"`
 	PasswordToken               *string       `gorm:"size:255" json:"-"`
 	PasswordTokenExpirationDate *time.Time    `json:"password_token_expiration_date,omitempty"`
+	NotificationEnabled         bool          `gorm:"default:false" json:"notification_enabled"`
+	LastSeen                    time.Time     `json:"last_seen,omitempty"`
+	Profile                     Profile       `json:"profile"`
+	ProfileID                   string
 }
 
-func (u *UserModel) TableName() string {
+func (u *User) TableName() string {
 	return "users"
 }
 
-func (u *UserModel) BeforeCreate(tx *gorm.DB) error {
+func (u *User) BeforeCreate(tx *gorm.DB) error {
 	u.ID = uuid.New().String()
 	hashedPwd := coreutils.HashPassword(u.Password)
 	tx.Statement.SetColumn("password", hashedPwd)
 	return nil
 }
 
-func (u *UserModel) ComparePasswordHash(inputPwd string) bool {
+func (u *User) ComparePasswordHash(inputPwd string) bool {
 	userPassword := coreutils.NormalizePassword(u.Password)
 	inputPassword := coreutils.NormalizePassword(inputPwd)
 

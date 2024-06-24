@@ -6,14 +6,14 @@ import (
 	"github.com/amosehiguese/dc/modules/dc/store"
 	coreconfig "github.com/amosehiguese/dc/pkg/core-config"
 	"github.com/gofiber/fiber/v3"
+	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
 
-func UserRoutes(v1 fiber.Router, config coreconfig.Config, log *zap.Logger) {
+func UserRoutes(v1 fiber.Router, config coreconfig.Config, log *zap.Logger, rc *redis.Client) {
 	users := v1.Group("/u")
 
 	db := store.GetDBClient()
-	rc, _ := store.RedisConn(config, log)
 
 	userHandler := user_api.NewUserHandler(user_api.NewUserRepo(), db, rc, log)
 

@@ -9,18 +9,18 @@ import (
 
 type UserHandler struct {
 	store.DB
-	User
+	IUser
 	*store.Redis[UserHandler]
 	*zap.Logger
 	*coreconfig.Config
 }
 
-func NewUserHandler(u User, db store.DB, rc *redis.Client, log *zap.Logger) *UserHandler {
+func NewUserHandler(u IUser, db store.DB, rc *redis.Client, log *zap.Logger) *UserHandler {
 	return &UserHandler{
 		DB:     db,
 		Redis:  (*store.Redis[UserHandler])(store.NewRedis[UserHandler](rc)),
 		Logger: log,
-		User:   u,
+		IUser:  u,
 		Config: coreconfig.GetConfig(),
 	}
 }

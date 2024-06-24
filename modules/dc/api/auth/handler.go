@@ -63,7 +63,7 @@ func (a *AuthHandler) Signup(c fiber.Ctx) error {
 		})
 	}
 
-	user := &store.UserModel{}
+	user := &store.User{}
 	user.CreatedAt = time.Now()
 	user.FirstName = signUpPayload.FirstName
 	user.LastName = &signUpPayload.LastName

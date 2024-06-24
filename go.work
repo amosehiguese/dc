@@ -4,6 +4,7 @@ use (
 	./modules/dc
 	./pkg/core-auth
 	./pkg/core-config
+	./pkg/core-jsonb
 	./pkg/core-jwt
 	./pkg/core-otel
 	./pkg/core-repo

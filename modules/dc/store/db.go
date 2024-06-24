@@ -52,7 +52,15 @@ func dbconnection(conn string) (*gorm.DB, error) {
 }
 
 func (c *DBClient) AutoMigrate() {
-	c.Client.AutoMigrate(&UserModel{})
+	c.Client.AutoMigrate(&Attachment{})
+	c.Client.AutoMigrate(&Chat{})
+	c.Client.AutoMigrate(&Connection{})
+	c.Client.AutoMigrate(&Doctor{})
+	c.Client.AutoMigrate(&Message{})
+	c.Client.AutoMigrate(&Profile{})
+	c.Client.AutoMigrate(&Reaction{})
+	c.Client.AutoMigrate(&UnreadMessage{})
+	c.Client.AutoMigrate(&User{})
 }
 
 func GetDBClient() *DBClient {
